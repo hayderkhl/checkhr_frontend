@@ -1,0 +1,65 @@
+<div class="container">
+  <div>
+    <div class="user-info">
+      <div class="user-avatar">
+        <img src="assets/profilepic.png" alt="User Profile" />
+      </div>
+      <div class="user-name">{{ user.fullName }}</div>
+    </div>
+    <div class="documents-container">
+      <!-- Document Table -->
+      <div class="document-table">
+        <h2 class="table-title">Documents</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Size</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let document of documents">
+              <td>{{ document.docname }}</td>
+              <td>{{ getFileExtension(document.docname) }}</td>
+              <td>{{ document.docsize }}</td>
+              <td>{{ document.date | date : "MM/dd/yyyy" }}</td>
+              <td>
+                <button class="download-button" (click)="downloadDocument(document.id_doc)">
+                  Download
+                </button>
+                <button class="delete-button" (click)="deleteDocument(document.id_doc)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Upload Document -->
+      <div class="upload-document">
+        <div class="buttons-container">
+          <div class="file-input-container">
+            <label for="fileInput" class="custom-file-label">
+              Choose a File
+            </label>
+            <input
+              type="file"
+              id="fileInput"
+              (change)="onFileSelected($event)"
+              accept=".pdf,.doc,.docx"
+            />
+          </div>
+        </div>
+        <div class="upload-message">{{ uploadMessage }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="meeting">
+    <app-meeting></app-meeting>
+  </div>
+</div>
+  

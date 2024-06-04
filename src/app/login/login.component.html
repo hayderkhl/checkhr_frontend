@@ -1,0 +1,42 @@
+<div class="login-container">
+  <div class="login-image">
+    <img src="assets/pht.png" alt="Login Image" />
+  </div>
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="assets/logochp.png" alt="Login Logo" />
+    </div>
+    <h1>Login to your Account</h1>
+    <div class="login-inputs">
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+      />
+      <input type="password" placeholder="Password" [(ngModel)]="password" />
+    </div>
+    <div class="" *ngIf="this.errorMessage.length > 0">invalid</div>
+    <div class="login-options">
+      <div class="remember-me">
+        <input type="checkbox" id="remember" />
+        <label for="remember">Remember me</label>
+        
+           <!-- Display only if user is not authenticated -->
+         <!-- Display only if user is not authenticated -->
+  
+    <a routerLink="/forgot-password">Forgot Password?</a>
+  
+
+  <!-- Router outlet to display the forgot password component -->
+  <router-outlet></router-outlet>
+        
+    <div class="login-button" (click)="login()">Login</div>
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>
+  
