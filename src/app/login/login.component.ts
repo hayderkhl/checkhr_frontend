@@ -1,4 +1,3 @@
-
 import { AuthService } from '../service/auth.service';
 
 import { Component } from '@angular/core';
@@ -53,7 +52,7 @@ export class LoginComponent {
               this.isAuthenticated = true;
 
               // Redirect to another page (e.g., dashboard) on successful login
-              this.router.navigate(['/']);
+              window.location.reload();
             } else {
               // Handle authentication error here, e.g., display an error message to the user
               console.error('Authentication failed');

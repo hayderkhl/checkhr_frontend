@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   showSearchResults: boolean = false;
   mouseOverDropdown: boolean = false;
   showUserDropdown = false;
-
+  userPhoto: string | ArrayBuffer | null = null; // Change the type to string | ArrayBuffer | null
   pages = [
     { title: 'Profile', iconClass: 'fas fa-user', url: '/employeprofile' },
     { title: 'Request Leave', iconClass: 'fas fa-bed', url: '/request-leave' },
@@ -56,19 +56,50 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('token');
     location.reload();
   }
-  ngOnInit() {
+  ngOnInit(): void {
     // Fetch the token from the authentication service
     const token = localStorage.getItem('token');
 
     if (token) {
       // Decode the token to get user information
       const decodedToken: any = jwt_decode(token);
-
+      console.log('decodedToken: ', decodedToken);
       // Assuming your token contains a 'username' claim
       this.username = decodedToken.sub;
+
+      // Fetch the user's photo URL
+      this.http
+        .get(`http://localhost:8094/employees/photo/${decodedToken.userId}`, {
+          responseType: 'blob',
+        })
+        .subscribe((photoBlob: Blob) => {
+          console.log('photoBlob: ', photoBlob);
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.userPhoto = reader.result;
+          };
+          reader.readAsDataURL(photoBlob);
+        });
     }
+
     this.getNotifications();
   }
+  getImageSource(): string {
+    if (typeof this.userPhoto === 'string') {
+      // If userPhoto is already a string (URL), return it directly
+      return this.userPhoto;
+    } else if (this.userPhoto instanceof ArrayBuffer) {
+      // If userPhoto is an ArrayBuffer, convert it to a data URL
+      return (
+        'data:image/jpeg;base64,' +
+        btoa(String.fromCharCode(...new Uint8Array(this.userPhoto)))
+      );
+    } else {
+      // Return the path to the placeholder image
+      return 'assets/6596121.png';
+    }
+  }
+
   onSearchInputFocus() {
     this.showSearchResults = true;
   }
@@ -137,5 +168,3 @@ export class NavbarComponent implements OnInit {
     }, 200);
   }
 }
-
-
