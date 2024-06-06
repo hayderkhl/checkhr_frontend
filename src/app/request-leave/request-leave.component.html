@@ -60,6 +60,26 @@
   </div>
 </div>
 
+<!-- Leave Report Generation -->
+<div class="leave-report-container">
+  <h3 class="report-title">Generate Leave Report</h3>
+  <form (submit)="generateReport($event)">
+    <div class="form-group">
+      <label for="reportYear">Year</label>
+      <input
+        type="number"
+        id="reportYear"
+        name="reportYear"
+        placeholder="Enter year"
+        [(ngModel)]="reportYear"
+      />
+    </div>
+    <div class="button-container">
+      <button class="submit-button" type="submit">Generate PDF</button>
+    </div>
+  </form>
+</div>
+
 <!-- List of Leave Requests -->
 <div class="leave-requests-container">
   <h3 class="requests-title">My Leave Requests</h3>
