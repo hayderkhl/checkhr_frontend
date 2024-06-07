@@ -7,7 +7,7 @@
           <button class="button" (click)="saveUserData()">Save</button>
         </div>
         <div class="profile-picture">
-          <img src="assets/profilepic.png" alt="User Profile" />
+          <img [src]="getImageSource()" alt="User Photo" />
         </div>
         <div class="edit-button">
           <button class="button">Edit</button>

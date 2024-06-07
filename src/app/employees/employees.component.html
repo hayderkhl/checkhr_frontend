@@ -19,10 +19,9 @@
         <tr *ngFor="let employee of employees">
           <td>
             <!-- Displaying employee avatar -->
-            
-
-            <img *ngIf="employee.photo" [src]="employee.photo" alt="API Image">
-            <div *ngIf="!employee.photo">Image not found</div>
+            <div class="profile-picture">
+              <img [src]="getImageSource(employee)" alt="User Photo" class="profile-img" />
+            </div>
           </td>
           <td>{{ employee.fullName }}</td>
           <td>{{ employee.department }}</td>

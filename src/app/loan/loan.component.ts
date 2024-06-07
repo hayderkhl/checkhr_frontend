@@ -21,6 +21,9 @@ export class LoanComponent implements OnInit {
       (response) => {
         this.allLoans = response;
         this.pendingLoans = this.allLoans.filter(loan => loan.status === null);
+        this.allLoans.forEach((loan) => {
+          this.fetchUserPhoto(loan);
+        });
       },
       (error) => {
         console.error('Error fetching loans: ', error);
@@ -56,6 +59,33 @@ export class LoanComponent implements OnInit {
       loan.status = status;
     }
     this.pendingLoans = this.allLoans.filter(loan => loan.status === null);
+  }
+
+  private fetchUserPhoto(loan: any): void {
+    const employeeId = loan.user.id_user; // Use id_user from the leave object
+
+    if (employeeId) {
+      this.http
+        .get(`http://localhost:8094/employees/photo/${employeeId}`, {
+          responseType: 'blob',
+        })
+        .subscribe(
+          (photoBlob: Blob) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              loan.userPhoto = reader.result as string;
+            };
+            reader.readAsDataURL(photoBlob);
+          },
+          (error) => {
+            console.error('Error fetching user photo', error);
+          }
+        );
+    }
+  }
+
+  getImageSource(loan: any): string {
+    return loan.userPhoto || 'assets/6596121.png';
   }
 
 }

@@ -6,7 +6,9 @@
         </div>
         <div class="employee-avatar">
           <!-- Add user avatar here -->
-          <img src="assets/avatar.png" alt="avatar.png" class="img" />
+          <div class="profile-picture">
+            <img [src]="getImageSource(employee)" alt="User Photo" class="profile-img" />
+          </div>
         </div>
         <span class="name">{{ employee.fullName }}</span>
         <div class="employee-footer" (click)="redirect(employee.id_user)">

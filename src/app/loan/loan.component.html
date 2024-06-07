@@ -8,7 +8,9 @@
             <tr>
               <th>
                 <div class="avatar">
-                  <img src="assets/avatar.png" class="image" />
+                  <div class="profile-picture">
+                    <img [src]="getImageSource(loan)" alt="User Photo" class="profile-img" />
+                  </div>
                   <span>{{ loan.user.fullName }}</span>
                 </div>
               </th>
@@ -55,7 +57,9 @@
             <tr>
               <th>
                 <div class="avatar">
-                  <img src="assets/avatar.png" class="image" />
+                  <div class="profile-picture">
+                    <img [src]="getImageSource(loan)" alt="User Photo" class="profile-img" />
+                  </div>
                   <span>{{ loan.user.fullName }}</span>
                 </div>
               </th>

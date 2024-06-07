@@ -150,3 +150,17 @@ body {
 .space-4cm {
   height: 4cm; /* Adjust height as needed */
 }
+
+.profile-picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-img {
+  width: 50px; /* Adjust the width as needed */
+  height: 50px; /* Adjust the height as needed */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the entire container */
+  border: 2px solid #ccc; /* Optional: adds a border around the image */
+}

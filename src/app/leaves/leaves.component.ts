@@ -22,6 +22,9 @@ export class LeavesComponent implements OnInit {
     this.http.get('http://localhost:8094/leaves').subscribe((response: any) => {
       this.allLeaves = response;
       this.pendingLeaves = this.allLeaves.filter((leave) => leave.status === null);
+      this.allLeaves.forEach((leave) => {
+        this.fetchUserPhoto(leave);
+      });
     });
   }
 
@@ -47,5 +50,32 @@ export class LeavesComponent implements OnInit {
       leave.status = status;
     }
     this.pendingLeaves = this.allLeaves.filter((leave) => leave.status === null);
+  }
+
+  private fetchUserPhoto(leave: any): void {
+    const employeeId = leave.user.id_user; // Use id_user from the leave object
+
+    if (employeeId) {
+      this.http
+        .get(`http://localhost:8094/employees/photo/${employeeId}`, {
+          responseType: 'blob',
+        })
+        .subscribe(
+          (photoBlob: Blob) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              leave.userPhoto = reader.result as string;
+            };
+            reader.readAsDataURL(photoBlob);
+          },
+          (error) => {
+            console.error('Error fetching user photo', error);
+          }
+        );
+    }
+  }
+
+  getImageSource(leave: any): string {
+    return leave.userPhoto || 'assets/6596121.png';
   }
 }

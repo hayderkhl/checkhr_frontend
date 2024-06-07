@@ -1,10 +1,14 @@
 <div class="container">
   <div>
       <div class="user-info">
+        <ng-container *ngFor="let document of documents">
           <div class="user-avatar">
-              <img src="assets/profilepic.png" alt="User Profile" />
+            <div class="profile-picture">
+                <img [src]="getImageSource(document)" alt="User Photo" class="profile-img" />
+              </div>
           </div>
           <div class="user-name">{{ userName }}</div>
+        </ng-container>
       </div>
       <div class="documents-container">
           <!-- Document Table -->

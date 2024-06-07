@@ -22,6 +22,9 @@ export class EmployeeListComponent implements OnInit {
       (response: any[]) => {
         // Assign the fetched data to the employees array
         this.employees = response;
+        this.employees.forEach((employee) => {
+          this.fetchUserPhoto(employee);
+        });
         
       },
       (error) => {
@@ -32,6 +35,24 @@ export class EmployeeListComponent implements OnInit {
   }
   redirect(id: string) {
     window.location.href = `/documents/${id}`;
+  }
+
+  private fetchUserPhoto(employee: any): void {
+    this.http
+      .get(`http://localhost:8094/employees/photo/${employee.id_user}`, {
+        responseType: 'blob',
+      })
+      .subscribe((photoBlob: Blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          employee.userPhoto = reader.result as string;
+        };
+        reader.readAsDataURL(photoBlob);
+      });
+  }
+
+  getImageSource(employee: any): string {
+    return employee.userPhoto || 'assets/6596121.png';
   }
 }
 

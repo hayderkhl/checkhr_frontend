@@ -96,3 +96,17 @@
     line-height: normal;
   }
   
+
+  .profile-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profile-img {
+    width: 55px; /* Adjust the width as needed */
+    height: 55px; /* Adjust the height as needed */
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the entire container */
+    border: 2px solid #ccc; /* Optional: adds a border around the image */
+  }

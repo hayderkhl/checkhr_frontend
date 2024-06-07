@@ -3,18 +3,15 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-employees',
-  
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.css'],
-  
 })
 export class EmployeesComponent implements OnInit {
   employees: any[] = [];
   selectedRating: number[] = []; // Assuming it's an array for each employee
   isCheckmarkRed = false;
 
-  constructor(private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     // Fetch employees from the API
@@ -71,6 +68,7 @@ export class EmployeesComponent implements OnInit {
         this.employees = response;
         this.employees.forEach((employee) => {
           this.selectedRating[employee.id_user] = employee.rate;
+          this.fetchUserPhoto(employee);
         });
       },
       (error) => {
@@ -93,6 +91,24 @@ export class EmployeesComponent implements OnInit {
         console.error('Error deleting employee:', error);
       }
     );
+  }
+
+  private fetchUserPhoto(employee: any): void {
+    this.http
+      .get(`http://localhost:8094/employees/photo/${employee.id_user}`, {
+        responseType: 'blob',
+      })
+      .subscribe((photoBlob: Blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          employee.userPhoto = reader.result as string;
+        };
+        reader.readAsDataURL(photoBlob);
+      });
+  }
+
+  getImageSource(employee: any): string {
+    return employee.userPhoto || 'assets/6596121.png';
   }
 }
 

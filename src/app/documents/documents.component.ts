@@ -18,6 +18,7 @@ export class DocumentsComponent implements OnInit {
   ngOnInit(): void {
     this.fetchUserData();
     this.fetchDocuments();
+    this.fetchUserPhoto();
   }
 
   fetchUserData() {
@@ -25,6 +26,9 @@ export class DocumentsComponent implements OnInit {
     const decodedToken: any = jwt_decode(token);
     this.userId = decodedToken.userId;
     this.userName = decodedToken.sub;
+    this.documents.forEach((document) => {
+      
+    });
   }
 
   getFileExtension(filename: string): string | null {
@@ -37,6 +41,7 @@ export class DocumentsComponent implements OnInit {
     this.http.get<any[]>(documentsApiUrl).subscribe(
       (response) => {
         this.documents = response;
+       
       },
       (error) => {
         console.error('Error fetching documents:', error);
@@ -101,6 +106,36 @@ export class DocumentsComponent implements OnInit {
         }
       );
     }
+  }
+
+  fetchUserPhoto(): void {
+    const token: any = localStorage.getItem('token');
+    const decodedToken: any = jwt_decode(token);
+    const userId = decodedToken.userId;
+  
+    this.http
+      .get(`http://localhost:8094/employees/photo/${userId}`, { responseType: 'blob' })
+      .subscribe(
+        (photoBlob: Blob) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.documents.forEach((document) => {
+              if (document.user.id_user === userId) {
+                document.userPhoto = reader.result as string;
+                console.log('Fetched user photo for', document);
+              }
+            });
+          };
+          reader.readAsDataURL(photoBlob);
+        },
+        (error) => {
+          console.error('Error fetching user photo', error);
+        }
+      );
+  }
+
+  getImageSource(document: any): string {
+    return document.userPhoto || 'assets/6596121.png';
   }
 
   uploadDocument() {}

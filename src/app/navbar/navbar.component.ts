@@ -56,6 +56,7 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('token');
     location.reload();
   }
+  
   ngOnInit(): void {
     // Fetch the token from the authentication service
     const token = localStorage.getItem('token');
