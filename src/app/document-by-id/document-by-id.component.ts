@@ -21,6 +21,7 @@ export class DocumentByIdComponent {
     // Replace with actual API calls
     this.fetchUserData();
     this.fetchDocuments();
+    this.fetchUserPhoto();
   }
 
   fetchUserData() {
@@ -54,6 +55,7 @@ export class DocumentByIdComponent {
     this.http.get<any[]>(documentsApiUrl).subscribe((response) => {
       this.documents = response;
       console.log(response);
+      this.fetchUserPhoto();
     });
   }
 
@@ -130,6 +132,23 @@ export class DocumentByIdComponent {
     }
   }
 
+  private fetchUserPhoto(): void {
+    this.http
+      .get(`http://localhost:8094/employees/photo/${this.userId}`, {
+        responseType: 'blob',
+      })
+      .subscribe((photoBlob: Blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.user.userPhoto = reader.result as string;
+        };
+        reader.readAsDataURL(photoBlob);
+      });
+  }
+
+  getImageSource(): string {
+    return this.user.userPhoto || 'assets/6596121.png';
+  }
 
   uploadDocument() {}
 }

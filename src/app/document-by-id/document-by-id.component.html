@@ -2,7 +2,12 @@
   <div>
     <div class="user-info">
       <div class="user-avatar">
-        <img src="assets/profilepic.png" alt="User Profile" />
+        <div class="employee-avatar">
+          <!-- Add user avatar here -->
+          <div class="profile-picture">
+            <img [src]="getImageSource()" alt="User Photo" class="profile-img" />
+          </div>
+        </div>
       </div>
       <div class="user-name">{{ user.fullName }}</div>
     </div>
