@@ -30,7 +30,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 const routes: Routes = [
  
 
-  { path: '', redirectTo: '/note', pathMatch: 'full' }, // Redirect empty path to '/profile'
+  { path: '', redirectTo: '/', pathMatch: 'full' }, // Redirect empty path to '/profile'
 
   {
     path: '',
