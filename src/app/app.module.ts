@@ -73,7 +73,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     NoopAnimationsModule,
     MatGridListModule,
   ],
-  providers: [EventwebsocketService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [EventwebsocketService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
