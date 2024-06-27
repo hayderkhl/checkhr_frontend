@@ -33,6 +33,8 @@ import { AuthorizedPageComponent } from './authorized-page/authorized-page.compo
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -71,7 +73,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     NoopAnimationsModule,
     MatGridListModule,
   ],
-  providers: [EventwebsocketService],
+  providers: [EventwebsocketService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -26,11 +26,10 @@ import { AuthorizedPageComponent } from './authorized-page/authorized-page.compo
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component'; // Import ForgotPasswordComponent
 import { ResetPasswordComponent } from './reset-password/reset-password.component'; // Adjust the path as per your project structure
 
-
 const routes: Routes = [
  
 
-  { path: '', redirectTo: '/', pathMatch: 'full' }, // Redirect empty path to '/profile'
+  { path: '', redirectTo: '/note', pathMatch: 'full' }, // Redirect empty path to '/profile'
 
   {
     path: '',
